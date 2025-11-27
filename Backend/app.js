@@ -20,8 +20,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 dotenv.config()
 
-// const url='mongodb+srv://pravin1095:resumeAnalyzer@cluster0.3dpr3py.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-
 // app.use(cors({
 //   origin: "https://task-creator-opal.vercel.app",  // your Vercel frontend
 //   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
