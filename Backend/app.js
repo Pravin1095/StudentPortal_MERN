@@ -1,15 +1,10 @@
-// const url = 'mongodb+srv://pravin1095:resumeAnalyzer@cluster0.3dpr3py.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-
 const express=require('express')
 const app=express()
 const bodyParser=require('body-parser')
-const cors = require('cors')
 const dotenv = require('dotenv')
 const mongoose=require('mongoose')
 const Student = require('./mongoose-models/student_data')
 const Course = require('./mongoose-models/course-data')
-// const taskRouter=require('./routes/taskRouter')
-// const authRouter = require('./routes/authRouter')
 
 const studentsRouter = require('./routes/student-router')
 const coursesRouter = require('./routes/courses-router')
@@ -20,11 +15,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 dotenv.config()
 
-// app.use(cors({
-//   origin: "https://task-creator-opal.vercel.app",  // your Vercel frontend
-//   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-//   credentials: true
-// }));
 
 app.use((req, res, next)=>{
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -33,8 +23,6 @@ app.use((req, res, next)=>{
     next()
 })
 
-// app.use('/api/tasks', taskRouter)
-// app.use('/api/users', authRouter)
 
 app.use('/api/students', studentsRouter)
 app.use('/api/courses',coursesRouter)
