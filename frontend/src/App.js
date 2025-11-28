@@ -11,7 +11,7 @@ export default function App() {
 
   const routes = [{path : '/dashboard',element:<Dashboard />, text:'Dashboard'},
     {path : '/students', element: <StudentList />, text:'StudentList'},
-     {path : '/students/add', element: <AddStudent />, text:'Add Student'},{path : '/students/:id',element: <StudentProfile />,text:''},{path : '/courses',element: <CoursesList />, text:'Courses List'},
+     {path : '/students/add', element: <AddStudent />,text:'Add Student'} ,{path : '/students/add/:studentId', element: <AddStudent />},{path : '/students/:id',element: <StudentProfile />,text:''},{path : '/courses',element: <CoursesList />, text:'Courses List'},
      {path : '/courses/add',element: <AddCourse />, text:'Add Course'},{path : '/enrollments',element: <Enrollments />, text:'Enrollments'}]
 
 

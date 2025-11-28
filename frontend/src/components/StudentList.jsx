@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { formatDate } from "../common/helper";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 export default function StudentList() {
@@ -7,6 +8,8 @@ export default function StudentList() {
 
   const url = 'http://localhost:8000/api'
   const [studentData, setStudentData] = useState([])
+
+  const navigate = useNavigate()
 
   useEffect(()=>{
 handleGetData()
@@ -24,6 +27,8 @@ handleGetData()
      
   }
 
+
+
 //   const formatDate = (d)=>{
 // console.log("check d", new Date(d))
 // const dObj = new Date(d)
@@ -38,6 +43,10 @@ const now = new Date()
 const curYear = now.getFullYear()
 const birthYear = new Date(d).getFullYear()
 return curYear-birthYear
+  }
+
+  const handleEdit = (id)=>{
+navigate(`/students/add/${id}`)
   }
   return (
     <div>
@@ -73,8 +82,8 @@ return curYear-birthYear
             <td className="studentAge">{calculateAge(data.dob)}</td>
             <td className="studentStatus">{data.status}</td>
             <td>
-              <button className="viewBtn">View</button>
-              <button className="editBtn">Edit</button>
+              <button onClick={()=>{navigate(`/students/${data._id}`)}} className="viewBtn">View</button>
+              <button onClick={()=>handleEdit(data._id)} className="editBtn">Edit</button>
               <button className="deleteBtn">Delete</button>
             </td>
           </tr>}) : <p id="loading">Loading...</p> }

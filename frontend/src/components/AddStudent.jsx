@@ -1,20 +1,85 @@
+import { useState, useEffect } from "react";
+import {useParams, useNavigate} from 'react-router-dom'
+import axios from "axios";
+import { formatDate } from "../common/helper";
+
 export default function AddStudent() {
+
+  const [formData, setFormData] = useState({
+    department : 'CSE',
+    status : 'Active'
+  })
+
+
+
+  const url = 'http://localhost:8000/api'
+
+  const {studentId} = useParams()
+
+  const getEditDataVal = async()=>{
+ try{
+const editStuData = await axios.get(`${url}/students/get/${studentId}`)
+setFormData((prev)=>{
+  return {
+    ...prev,
+    ...editStuData.data
+  }
+})
+  }
+  catch(err){
+
+  }
+  }
+  useEffect(()=>{
+if(studentId){
+ getEditDataVal()
+}
+  },[])
+
+  const handleChangeForm = (e)=>{
+const {name, value} = e.target
+setFormData((prev)=>{
+  return {
+  ...prev,
+[name] : value}
+})
+console.log("check form", formData)
+  }
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault()
+console.log("hi submit", formData)
+try{
+  if(studentId){
+const res = await axios.patch(`${url}/students/add/${studentId}`,formData)
+alert(res.data.message)
+  }
+  else{
+const res = await axios.post(`${url}/students/add`, formData)
+alert(res.data.message)
+  }
+}
+catch(err){
+console.log("check post err student",err)
+}
+  }
+  console.log("check dob", formData.dob)
   return (
     <div>
-      <h2>Add Student</h2>
+      <h2>{studentId ? 'Edit Student' : 'Add Student'}</h2>
 
-      <form id="addStudentForm">
+      <form onSubmit={(e)=>handleSubmit(e)} id="addStudentForm">
         <label>Full Name</label>
-        <input id="nameInput" type="text" placeholder="Enter full name" />
+        <input value={formData.name} required onChange={(e)=>{handleChangeForm(e)}} name='name' id="nameInput" type="text" placeholder="Enter full name" />
 
         <label>Email</label>
-        <input id="emailInput" type="email" placeholder="Enter email" />
+        <input value={formData.email} required onChange={(e)=>{handleChangeForm(e)}} name='email' id="emailInput" type="email" placeholder="Enter email" />
 
         <label>Date of Birth</label>
-        <input id="dobInput" type="date" />
+        <input value={formatDate(formData.dob)} required onChange={(e)=>{handleChangeForm(e)}} name='dob' id="dobInput" type="date" />
 
         <label>Gender</label>
-        <select id="genderSelect">
+        <select required onChange={(e)=>{handleChangeForm(e)}} name='gender' id="genderSelect">
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -22,19 +87,30 @@ export default function AddStudent() {
         </select>
 
         <label>Phone</label>
-        <input id="phoneInput" type="tel" placeholder="10-digit phone" />
+        <input value={formData.phone} required onChange={(e)=>{handleChangeForm(e)}} maxlength='10' name='phone' id="phoneInput" type="tel" placeholder="10-digit phone" />
 
         <label>Address</label>
-        <textarea id="addressInput" placeholder="Street, City, Pincode"></textarea>
+        <textarea value={formData.address} required onChange={(e)=>{handleChangeForm(e)}} name='address' id="addressInput" placeholder="Street, City, Pincode"></textarea>
+
+{/* "CSE", "IT", "ECE", "MECH", "CIVIL" */}
+<label>Department</label>
+        <select value={formData.department} required onChange={(e)=>{handleChangeForm(e)}} name='department' id="departmentSelect">
+          <option value="CSE">CSE</option>
+          <option value="IT">IT</option>
+          <option value="ECE">ECE</option>
+          <option value="MECH">MECH</option>
+          <option value="CIVIL">CIVIL</option>
+        </select>
+
 
         <label>Status</label>
-        <select id="statusSelect">
+        <select value={formData.status} required onChange={(e)=>{handleChangeForm(e)}} name='status' id="statusSelect">
           <option value="Active">Active</option>
           <option value="Inactive">Inactive</option>
         </select>
 
         <label>Admission Date</label>
-        <input id="admissionDateInput" type="date" />
+        <input value={formatDate(formData.admissionDate)}  required onChange={(e)=>{handleChangeForm(e)}} name='admissionDate' id="admissionDateInput" type="date" />
 
         <button id="submitStudentBtn" type="submit">Submit</button>
         <p id="formError" style={{ color: "red" }}>Validation errors will show here</p>
