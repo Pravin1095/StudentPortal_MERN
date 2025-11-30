@@ -48,6 +48,7 @@ setEnrolledData(res.data)
       const handleEnrollment = async()=>{
         try{
           const res = await axios.post(`${url}/enroll/${selectedStudentId}/${selectedCourseId}`,{enrollmentDate})
+          const courseChange = await axios.patch(`${url}/courses/${selectedCourseId}`,{seatsAvailable : 'seatsAvailableDecrease'})
           alert(res.data.message)
           handleGetEnroll()
         }
@@ -79,6 +80,18 @@ console.log("name, val", name,value)
       const handleDateChange =(e)=>{
 console.log("chevk date", e.target.value)
 setEnrollmentDate(new Date(e.target.value))
+      }
+
+      const handleDrop = async(id)=>{
+try{
+const res = await axios.delete(`${url}/enroll/${id}`)
+await axios.patch(`${url}/courses/${selectedCourseId}`,{seatsAvailable : "seatsAvailableIncrease"})
+alert(res.data.message)
+}
+catch(err){
+
+}
+handleGetEnroll()
       }
   return (
     <div>
@@ -114,7 +127,7 @@ setEnrollmentDate(new Date(e.target.value))
             <td>{data.studentId.name}</td>
             <td>{data.courseId.courseName}</td>
             <td>{formatDate(data.enrolledOn)}</td>
-            <td><button className="dropBtn">Drop</button></td>
+            <td><button onClick={()=>handleDrop(data._id)} className="dropBtn">Drop</button></td>
           </tr>})}
         </tbody>
       </table>

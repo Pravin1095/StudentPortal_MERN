@@ -1,3 +1,4 @@
+const { findByIdAndUpdate } = require('../mongoose-models/course-data')
 const Student = require('../mongoose-models/student_data')
 const express = require('express')
 
@@ -44,7 +45,15 @@ studentsRouter.patch('/add/:id',async(req, res)=>{
     try{
 const {id} = req.params
 const {body} = req
+if(body.subject){
+const res = await Student.findByIdAndUpdate(id, {$set:{
+    [`marks.${body.subject}`]  : Number(body.score)
+}})
+}
+else{
 const studentData = await Student.findByIdAndUpdate(id,body)
+}
+
 res.status(201).json({message : 'Updated successfully'})
     }
     catch(err){

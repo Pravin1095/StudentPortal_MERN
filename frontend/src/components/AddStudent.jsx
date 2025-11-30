@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {useParams, useNavigate} from 'react-router-dom'
 import axios from "axios";
-import { formatDate } from "../common/helper";
+import { formatDate, calculateAge, checkIsFuture } from "../common/helper";
 
 export default function AddStudent() {
 
@@ -63,6 +63,10 @@ catch(err){
 console.log("check post err student",err)
 }
   }
+
+  const isDisabled = ()=>{
+    return formData?.name?.trim().length<3 || calculateAge(formData?.dob)<18 || checkIsFuture(formData?.admissionDate)
+  }
   console.log("check dob", formData.dob)
   return (
     <div>
@@ -112,8 +116,10 @@ console.log("check post err student",err)
         <label>Admission Date</label>
         <input value={formatDate(formData.admissionDate)}  required onChange={(e)=>{handleChangeForm(e)}} name='admissionDate' id="admissionDateInput" type="date" />
 
-        <button id="submitStudentBtn" type="submit">Submit</button>
-        <p id="formError" style={{ color: "red" }}>Validation errors will show here</p>
+        <button disabled={isDisabled()} id="submitStudentBtn" type="submit">Submit</button>
+        <p id="formErrorName" style={{ color: "red" }}>{formData?.name?.trim().length<3 && "Name should be more than 3 characters"}</p>
+        <p id="formErrorDob" style={{ color: "red" }}>{calculateAge(formData?.dob)<18 && "Age should be greater than or equal to 18"}</p>
+        <p id="formErrorAdmDate" style={{ color: "red" }}>{checkIsFuture(formData?.admissionDate) && "Admission Date cannot be future date"}</p>
       </form>
     </div>
   );

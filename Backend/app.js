@@ -102,7 +102,7 @@ await Course.insertMany([
     "startDate": "2025-04-01",
     "endDate": "2025-05-10",
     "totalSeats": 120,
-    "seatsAvailable": 100,
+    "seatsAvailable": 120,
     "creditHours": 5
   },
   {
@@ -112,7 +112,7 @@ await Course.insertMany([
     "startDate": "2025-01-20",
     "endDate": "2025-02-20",
     "totalSeats": 75,
-    "seatsAvailable": 55,
+    "seatsAvailable": 75,
     "creditHours": 3
   },
   {
@@ -122,7 +122,7 @@ await Course.insertMany([
     "startDate": "2025-02-15",
     "endDate": "2025-03-18",
     "totalSeats": 50,
-    "seatsAvailable": 40,
+    "seatsAvailable": 50,
     "creditHours": 2
   }
 ]

@@ -36,4 +36,16 @@ console.log("check get enroll error", err)
     }
 })
 
+enrollRouter.delete('/:id', async(req, res)=>{
+    try{
+        const {id} = req.params
+const EnrollData = await Enrollment.findByIdAndDelete(id)
+res.status(200).json({message : "Deleted successfully"})
+    }
+    catch(err){
+        res.status(400)
+    }
+    
+})
+
 module.exports = enrollRouter

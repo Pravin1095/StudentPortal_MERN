@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { formatDate } from "../common/helper";
+import { formatDate, calculateAge } from "../common/helper";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
@@ -38,12 +38,12 @@ handleGetData()
 // return `${y}-${m}-${dd}`
 //   }
 
-  const calculateAge = (d)=>{
-const now = new Date()
-const curYear = now.getFullYear()
-const birthYear = new Date(d).getFullYear()
-return curYear-birthYear
-  }
+//   const calculateAge = (d)=>{
+// const now = new Date()
+// const curYear = now.getFullYear()
+// const birthYear = new Date(d).getFullYear()
+// return curYear-birthYear
+//   }
 
   const handleEdit = (id)=>{
 navigate(`/students/add/${id}`)
