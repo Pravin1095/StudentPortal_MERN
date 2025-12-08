@@ -7,7 +7,7 @@ const enrollRouter = express.Router()
 enrollRouter.post('/:sid/:cid',async(req,res)=>{
     try{
 
-    
+    await Enrollment.deleteMany({})
     const {sid, cid} = req.params
     const {enrollmentDate} = req.body 
     const enrollCourse = new Enrollment({
@@ -19,7 +19,7 @@ enrollRouter.post('/:sid/:cid',async(req,res)=>{
     res.status(201).json({message : 'Enrolled successfully'})
 }
 catch(err){
-    res.status(400)
+    res.status(400).json({error : err.message})
 }
 })
 

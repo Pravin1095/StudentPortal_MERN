@@ -14,6 +14,19 @@ coursesRouter.get('/get', async(req, res)=>{
    
 })
 
+coursesRouter.post('',async(req, res)=>{
+    try{
+const {body} = req
+const courseData = new Course({...body, seatsAvailable : body.totalSeats})
+await courseData.save()
+res.status(201).json({message:"Added new course successfully"})
+    }
+    catch(err){
+        console.log("check post err", err)
+res.status(400).json({error: err})
+    }
+})
+
 coursesRouter.patch('/:id', async(req, res)=>{
     try{
         const {id} = req.params

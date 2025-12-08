@@ -28,6 +28,16 @@ res.status(400)
     }
 })
 
+studentsRouter.get('/getByAge', async(req, res)=>{
+    try{
+const student = await Student.find({attendedClasses : {$lt : 80}, department : 'CSE'})
+res.status(200).json(student)
+    }
+    catch(err){
+        res.status(400).json({error : err.message})
+    }
+})
+
 studentsRouter.post('/add',async(req, res)=>{
     try{
 const {body} = req

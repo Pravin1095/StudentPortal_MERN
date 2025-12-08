@@ -8,6 +8,7 @@ export default function StudentList() {
 
   const url = 'http://localhost:8000/api'
   const [studentData, setStudentData] = useState([])
+  const [filterByAttendance, setFilterByAttendance] = useState([])
 
   const navigate = useNavigate()
 
@@ -27,7 +28,7 @@ handleGetData()
      
   }
 
-
+console.log("check filterBy Attendance", filterByAttendance)
 
 //   const formatDate = (d)=>{
 // console.log("check d", new Date(d))
@@ -45,6 +46,17 @@ handleGetData()
 // return curYear-birthYear
 //   }
 
+
+const handleFilterAge = async(e)=>{
+  e.preventDefault()
+  try{
+const student = await axios.get(`${url}/students/getByAge`)
+setFilterByAttendance(student?.data)
+  }
+  catch(err){
+    alert(err?.response?.data?.error)
+  }
+}
   const handleEdit = (id)=>{
 navigate(`/students/add/${id}`)
   }
@@ -90,6 +102,19 @@ navigate(`/students/add/${id}`)
         </tbody>
       </table>
 
+<button onClick={(e)=>handleFilterAge(e)}>Filter By Attendance</button>
+{filterByAttendance && filterByAttendance.map((data)=>{ return <tr key={data._id} className="studentRow">
+            <td className="studentName">{data.name}</td>
+            <td className="studentEmail">{data.email}</td>
+            <td className="studentDob">{formatDate(data.dob)}</td>
+            <td className="studentAge">{calculateAge(data.dob)}</td>
+            <td className="studentStatus">{data.status}</td>
+            <td>
+              <button onClick={()=>{navigate(`/students/${data._id}`)}} className="viewBtn">View</button>
+              <button onClick={()=>handleEdit(data._id)} className="editBtn">Edit</button>
+              <button className="deleteBtn">Delete</button>
+            </td>
+          </tr>})}
       
       <p id="error" style={{ color: "red" }}>Error message placeholder</p>
     </div>

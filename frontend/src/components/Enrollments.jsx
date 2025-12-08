@@ -53,7 +53,7 @@ setEnrolledData(res.data)
           handleGetEnroll()
         }
         catch(err){
-
+alert(err.response.data.error)
         }
       }
 

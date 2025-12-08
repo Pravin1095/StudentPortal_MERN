@@ -7,11 +7,12 @@ import CoursesList from './components/CoursesList';
 import AddCourse from './components/AddCourse';
 import Enrollments from './components/Enrollments';
 import { NavLayout } from './App-styled.styles';
+import CourseProfile from './components/CourseProfile';
 export default function App() {
 
   const routes = [{path : '/dashboard',element:<Dashboard />, text:'Dashboard'},
     {path : '/students', element: <StudentList />, text:'StudentList'},
-     {path : '/students/add', element: <AddStudent />,text:'Add Student'} ,{path : '/students/add/:studentId', element: <AddStudent />},{path : '/students/:id',element: <StudentProfile />,text:''},{path : '/courses',element: <CoursesList />, text:'Courses List'},
+     {path : '/students/add', element: <AddStudent />,text:'Add Student'} ,{path : '/students/add/:studentId', element: <AddStudent />},{path : '/students/:id',element: <StudentProfile />,text:''},{path : '/courses',element: <CoursesList />, text:'Courses List'}, {path : '/courses/:courseId',element: <CourseProfile />, text:''},
      {path : '/courses/add',element: <AddCourse />, text:'Add Course'},{path : '/enrollments',element: <Enrollments />, text:'Enrollments'}]
 
 

@@ -43,11 +43,17 @@ setFormData((prev)=>{
   ...prev,
 [name] : value}
 })
-console.log("check form", formData)
+
   }
+console.log("check form", formData)
+
 
   const handleSubmit = async(e)=>{
     e.preventDefault()
+    if(!formData?.name || !formData?.email || !formData?.dob || !formData?.gender || !formData?.phone || !formData?.address || !formData?.department || !formData?.status || !formData?.admissionDate ){
+      alert("Please fill all fields")
+      return
+    }
 console.log("hi submit", formData)
 try{
   if(studentId){
@@ -74,16 +80,16 @@ console.log("check post err student",err)
 
       <form onSubmit={(e)=>handleSubmit(e)} id="addStudentForm">
         <label>Full Name</label>
-        <input value={formData.name} required onChange={(e)=>{handleChangeForm(e)}} name='name' id="nameInput" type="text" placeholder="Enter full name" />
+        <input value={formData.name} onChange={(e)=>{handleChangeForm(e)}} name='name' id="nameInput" type="text" placeholder="Enter full name" />
 
         <label>Email</label>
-        <input value={formData.email} required onChange={(e)=>{handleChangeForm(e)}} name='email' id="emailInput" type="email" placeholder="Enter email" />
+        <input value={formData.email} onChange={(e)=>{handleChangeForm(e)}} name='email' id="emailInput" type="email" placeholder="Enter email" />
 
         <label>Date of Birth</label>
-        <input value={formatDate(formData.dob)} required onChange={(e)=>{handleChangeForm(e)}} name='dob' id="dobInput" type="date" />
+        <input value={formatDate(formData.dob)} onChange={(e)=>{handleChangeForm(e)}} name='dob' id="dobInput" type="date" />
 
         <label>Gender</label>
-        <select required onChange={(e)=>{handleChangeForm(e)}} name='gender' id="genderSelect">
+        <select onChange={(e)=>{handleChangeForm(e)}} name='gender' id="genderSelect">
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -91,14 +97,14 @@ console.log("check post err student",err)
         </select>
 
         <label>Phone</label>
-        <input value={formData.phone} required onChange={(e)=>{handleChangeForm(e)}} maxlength='10' name='phone' id="phoneInput" type="tel" placeholder="10-digit phone" />
+        <input value={formData.phone} onChange={(e)=>{handleChangeForm(e)}} maxlength='10' name='phone' id="phoneInput" type="tel" placeholder="10-digit phone" />
 
         <label>Address</label>
-        <textarea value={formData.address} required onChange={(e)=>{handleChangeForm(e)}} name='address' id="addressInput" placeholder="Street, City, Pincode"></textarea>
+        <textarea value={formData.address} onChange={(e)=>{handleChangeForm(e)}} name='address' id="addressInput" placeholder="Street, City, Pincode"></textarea>
 
 {/* "CSE", "IT", "ECE", "MECH", "CIVIL" */}
 <label>Department</label>
-        <select value={formData.department} required onChange={(e)=>{handleChangeForm(e)}} name='department' id="departmentSelect">
+        <select value={formData.department} onChange={(e)=>{handleChangeForm(e)}} name='department' id="departmentSelect">
           <option value="CSE">CSE</option>
           <option value="IT">IT</option>
           <option value="ECE">ECE</option>
@@ -108,15 +114,15 @@ console.log("check post err student",err)
 
 
         <label>Status</label>
-        <select value={formData.status} required onChange={(e)=>{handleChangeForm(e)}} name='status' id="statusSelect">
+        <select value={formData.status} onChange={(e)=>{handleChangeForm(e)}} name='status' id="statusSelect">
           <option value="Active">Active</option>
           <option value="Inactive">Inactive</option>
         </select>
 
         <label>Admission Date</label>
-        <input value={formatDate(formData.admissionDate)}  required onChange={(e)=>{handleChangeForm(e)}} name='admissionDate' id="admissionDateInput" type="date" />
+        <input value={formatDate(formData.admissionDate)} onChange={(e)=>{handleChangeForm(e)}} name='admissionDate' id="admissionDateInput" type="date" />
 
-        <button disabled={isDisabled()} id="submitStudentBtn" type="submit">Submit</button>
+        <button id="submitStudentBtn" type="submit">Submit</button>
         <p id="formErrorName" style={{ color: "red" }}>{formData?.name?.trim().length<3 && "Name should be more than 3 characters"}</p>
         <p id="formErrorDob" style={{ color: "red" }}>{calculateAge(formData?.dob)<18 && "Age should be greater than or equal to 18"}</p>
         <p id="formErrorAdmDate" style={{ color: "red" }}>{checkIsFuture(formData?.admissionDate) && "Admission Date cannot be future date"}</p>
